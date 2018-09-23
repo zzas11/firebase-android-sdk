@@ -438,7 +438,7 @@ public abstract class LocalStoreTestCase {
     if (garbageCollectorIsEager()) {
       assertNotContains("foo/bar");
     } else {
-      assertContains(deletedDoc("foo/bar", 1));
+      assertContains(deletedDoc("foo/bar", 1, /*hasCommittedMutations=*/ true));
     }
   }
 
@@ -462,7 +462,7 @@ public abstract class LocalStoreTestCase {
       // Neither the target nor the mutation pin the document, it should be gone.
       assertNotContains("foo/bar");
     } else {
-      assertContains(deletedDoc("foo/bar", 2));
+      assertContains(deletedDoc("foo/bar", 2, /*hasCommittedMutations=*/ true));
     }
   }
 
@@ -487,7 +487,7 @@ public abstract class LocalStoreTestCase {
       // anymore.
       assertNotContains("foo/bar");
     } else {
-      assertContains(deletedDoc("foo/bar", 2));
+      assertContains(deletedDoc("foo/bar", 2, /*hasCommittedMutations=*/true));
     }
   }
 
@@ -606,7 +606,7 @@ public abstract class LocalStoreTestCase {
 
     acknowledgeMutation(2); // delete mutation
     assertRemoved("foo/bar");
-    assertContains(deletedDoc("foo/bar", 2));
+    assertContains(deletedDoc("foo/bar", 2, true));
 
     acknowledgeMutation(3); // patch mutation
     assertChanged(unknownDoc("foo/bar", 3));
